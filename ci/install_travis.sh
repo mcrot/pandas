@@ -160,5 +160,13 @@ echo "[show pandas]"
 conda list pandas
 
 echo
+echo "[show final conda list]"
+conda list
+
+echo
+echo "[try importing http.client]"
+python -c "import http.client"
+
+echo
 echo "[done]"
 exit 0
