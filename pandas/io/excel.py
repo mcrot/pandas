@@ -10,6 +10,7 @@ import os
 import abc
 import warnings
 import numpy as np
+from http.client import HTTPResponse
 
 from pandas.core.dtypes.common import (
     is_integer, is_float,
@@ -387,7 +388,10 @@ class ExcelFile(object):
             self.book = io
         elif not isinstance(io, xlrd.Book) and hasattr(io, "read"):
             # N.B. xlrd.Book has a read attribute too
-            if hasattr(io, 'seek'):
+            #
+            # Excluding the case http.client.HTTPResponse.seek() here
+            # because it raises an UnsupportedOperation exception
+            if not isinstance(io, HTTPResponse) and hasattr(io, 'seek'):
                 # GH 19779
                 io.seek(0)
 
